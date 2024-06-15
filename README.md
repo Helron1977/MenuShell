@@ -3,6 +3,18 @@
 1. Créez un fichier de configuration `menu.conf` avec les options de menu souhaitées.
 2. Exécutez le script Bash principal pour afficher le menu et naviguer à travers les options définies.
 
+**Fichiers de Configuration**:
+    - Utilisation de fichiers `.conf` pour définir les options de menu.
+    - Format des fichiers de configuration : chaque ligne représente une option de menu sous la forme `Libellé:Action`.
+    
+#### Fichier de Configuration Exemple (`menu.conf`)
+
+Menu principal<br>
+Lister Répertoires:/path/to/directory<br>
+Définir le répertoire actuel comme source: source=/path/to/source<br>
+Définir le répertoire actuel comme cible:cible=/path/to/target<br>
+Copier les fichiers du répertoire source vers le répertoire cible:cp $source $cible<br>
+
 ## Avantages
 - **Simplicité** : Facile à mettre en place et à utiliser.
 - **Dynamisme** : Génération automatique de menus en fonction de la structure des répertoires.
