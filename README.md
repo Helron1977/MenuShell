@@ -32,9 +32,9 @@ Comment lines start with a '#' character
 Each line represents a menu option and has the following format:
 <Label>:<action> [%1] [%2]
 
-The `<label>` is the text that will be displayed in the menu, and the `<action>` is the command that will be executed when the user selects the option.
-Keyword in actions can be set.
-Optionnal parameter can be add with a caracter %. a prompt will ask the user to type the param before the eval of the string
+The `<label>` is the text that will be displayed in the menu, and the `<action>` is the command that will be executed when the user selects the option.</br>
+Keyword in actions can be set.</br>
+Optionnal parameter can be add with a caracter %. A prompt will ask the user to type the param before the eval of the string
 
 ## Customization
 
