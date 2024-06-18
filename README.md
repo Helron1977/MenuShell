@@ -1,4 +1,4 @@
-# Bash Menu Script
+# MenuShell Script
 
 This is a simple Bash script that generates a menu based on a configuration file and allows the user to perform various actions such as listing files, viewing logs, editing files, and copying files between directories.
 
