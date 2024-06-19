@@ -24,12 +24,10 @@ read_config_file() {
     echo "$joined_options"
 }
 
-generate_menu_config() {
+# Function to generate menu config for subdirectories
+generate_subdir_config() {
     local directory="$1"
-    local parent_menu_file="$2"
-    local config_file="${directory##*/}.conf"
-    check_directory_exists "$directory" || return 1
-    echo "# Menu generated from subdirectories, .log and .zip files of $directory" > "$config_file"
+    local config_file="$2"
     local subdirs
     subdirs=$(find "$directory" -mindepth 1 -type d)
     if [ -n "$subdirs" ]; then
@@ -38,6 +36,12 @@ generate_menu_config() {
             echo "List $subdir:List $directory/$subdir" >> "$config_file"
         done
     fi
+}
+
+# Function to handle files in a directory
+handle_files() {
+    local directory="$1"
+    local config_file="$2"
     local files
     files=$(find "$directory" -maxdepth 1 -type f \( -name "*.log" -o -name "*.zip" \))
     for file in $files; do
@@ -45,10 +49,28 @@ generate_menu_config() {
         echo "Display $file:Display $directory/$file" >> "$config_file"
         echo "Edit $file:Edit $directory/$file" >> "$config_file"
     done
+}
+
+# Function to add common actions to the config file
+add_common_actions() {
+    local parent_menu_file="$1"
+    local directory="$2"
+    local config_file="$3"
     echo "Return to previous menu:$parent_menu_file" >> "$config_file"
     echo "Set current directory as source:source=$directory" >> "$config_file"
     echo "Set current directory as target:target=$directory" >> "$config_file"
     echo "Copy files from source directory to target directory:cp \$source \$target" >> "$config_file"
+}
+
+generate_menu_config() {
+    local directory="$1"
+    local parent_menu_file="$2"
+    local config_file="${directory##*/}.conf"
+    check_directory_exists "$directory" || return 1
+    echo "# Menu generated from subdirectories, .log and .zip files of $directory" > "$config_file"
+    generate_subdir_config "$directory" "$config_file"
+    handle_files "$directory" "$config_file"
+    add_common_actions "$parent_menu_file" "$directory" "$config_file"
 }
 
 # Function to display a message with xmessage and capture the user's response
