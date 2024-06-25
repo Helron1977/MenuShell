@@ -83,7 +83,7 @@ show_message_with_buttons() {
     for (( index = 0; index < ${#button_labels[@]}; index++ )); do
         buttons+="$(($index + 1)):${button_labels[$index]},"
     done
-    buttons+="X:Quit,A:Add "
+    buttons+="A:Add,D:Delete,X:Quit"
  
     # Display the message with buttons and capture the user's response
     response=$(xmessage -geometry +0+0 -buttons "$buttons" -print "$(printf "$prompt")")
@@ -125,7 +125,7 @@ add_item_to_menu() {
     fi
 }
 
-delele_item_from_menu() {
+delete_item_from_menu() {
     local menu_file="$1"
     local line_index=0
     local nb_head_comment_lines=0
@@ -167,16 +167,6 @@ count_head_comment_lines() {
     echo "$nb_head_comment_lines"
 }
 
-# Function to build prompt string from options
-build_prompt() {
-    local options=("$@")
-    local prompt=""
-    for i in "${!options[@]}"; do
-        IFS=: read -r libelle action <<< "${options[$i]}"
-        prompt+="$((i+1)). $libelle\n"
-    done
-    echo "$prompt"
-}
 
 # Function to build button labels array from options
 build_button_labels() {
