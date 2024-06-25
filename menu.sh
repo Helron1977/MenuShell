@@ -1,29 +1,6 @@
 #!/bin/bash
 source ./utils.sh
 
-# Add each option to the prompt
-build_prompt() {
-    local options=("$@")
-    local prompt=""
-    local i=1
-    for option in "${options[@]}"; do
-        IFS=: read -r libelle action <<< "$option"
-        prompt+="$((i++)). $libelle\n"
-    done
-    echo "$prompt"
-}
-
-# Add the button labels
-build_button_labels() {
-    local options=("$@")
-    local button_labels=()
-    for option in "${options[@]}"; do
-        IFS=: read -r libelle action <<< "$option"
-        button_labels+=("$libelle")
-    done
-    echo "${button_labels[@]}"
-}
-
 # Function to display the menu in xmessage
 display_menu() {
     local menu_file="$1"
@@ -58,6 +35,9 @@ display_menu() {
             exit
         elif [[ "$choice_index" == "A" ]]; then
                 add_item_to_menu "$menu_file"
+                display_menu "$menu_file"
+        elif [[ "$choice_index" == "D" ]]; then
+                delete_item_from_menu "$menu_file"
                 display_menu "$menu_file"
         fi
         local choice=$choice_index
